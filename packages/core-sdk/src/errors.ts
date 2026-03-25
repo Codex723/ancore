@@ -63,8 +63,8 @@ export class SimulationExpiredError extends AncoreSdkError {
     super(
       'SIMULATION_EXPIRED',
       'The simulation result has expired or requires ledger entry restoration. ' +
-        'Please retry the transaction. If this persists the contract storage ' +
-        'may need to be restored first.'
+      'Please retry the transaction. If this persists the contract storage ' +
+      'may need to be restored first.'
     );
     this.name = 'SimulationExpiredError';
     Object.setPrototypeOf(this, new.target.prototype);
@@ -83,6 +83,21 @@ export class BuilderValidationError extends AncoreSdkError {
   constructor(message: string) {
     super('BUILDER_VALIDATION', message);
     this.name = 'BuilderValidationError';
+    Object.setPrototypeOf(this, new.target.prototype);
+  }
+}
+
+/**
+ * Thrown when session-key management operations fail after delegating to the
+ * account abstraction layer.
+ */
+export class SessionKeyManagementError extends AncoreSdkError {
+  public readonly cause?: unknown;
+
+  constructor(message: string, code: string = 'SESSION_KEY_MANAGEMENT_FAILED', cause?: unknown) {
+    super(code, message);
+    this.name = 'SessionKeyManagementError';
+    this.cause = cause;
     Object.setPrototypeOf(this, new.target.prototype);
   }
 }
